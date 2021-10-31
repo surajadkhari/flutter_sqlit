@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart' as sql;
 
 class SqlService {
@@ -58,5 +59,15 @@ class SqlService {
     final result =
         await _db.update('Todo', newTodo, where: 'id =?', whereArgs: [id]);
     return result;
+  }
+
+  //Delete
+  Future deleteTodo(int id) async {
+    final _db = await SqlService().Db();
+    try {
+      await _db.delete('Todo', where: 'id=?', whereArgs: [id]);
+    } catch (error) {
+      debugPrint(error.toString());
+    }
   }
 }
