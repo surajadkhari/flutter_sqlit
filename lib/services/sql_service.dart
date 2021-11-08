@@ -20,7 +20,7 @@ class SqlService {
   }
 
   //Create Table
-  Future createTables(sql.Database database) async {
+  Future<void> createTables(sql.Database database) async {
     await database.execute("""CREATE TABLE Todo(
       id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
       title TEXT,
@@ -44,13 +44,13 @@ class SqlService {
 
 //Read todo
   Future<List<Map<String, dynamic>>> getTodo() async {
-    final _db = await SqlService().Db();
+    final _db = await SqlService().Db(); //open database
     return _db.query('Todo', orderBy: 'id');
   }
 
 //Update new Todo
   Future<int> updateTodo(int id, String title, String description) async {
-    final _db = await SqlService().Db();
+    final _db = await SqlService().Db(); //open database
     final newTodo = {
       'title': title,
       'description': description,
@@ -63,7 +63,7 @@ class SqlService {
 
   //Delete
   Future deleteTodo(int id) async {
-    final _db = await SqlService().Db();
+    final _db = await SqlService().Db(); //open database
     try {
       await _db.delete('Todo', where: 'id=?', whereArgs: [id]);
     } catch (error) {
